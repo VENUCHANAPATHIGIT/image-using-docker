@@ -95,11 +95,29 @@ def binary_clock(x):
 
 
     M = [[m[i] for m in final] for i in range(4)][::-1]
-    #print(M)
+    #Adding ':'s
+    M[0].insert(2,':')
+    M[0].insert(5,':')
+    M[1].insert(2,':')
+    M[1].insert(5,':')
+    M[2].insert(2,':')
+    M[2].insert(5,':')
+    M[3].insert(2,':')
+    M[3].insert(5,':')
 
+    #Adding binaries
+    M[0].insert(0,'8 ')
+    M[1].insert(0,'4 ')
+    M[2].insert(0,'2 ')
+    M[3].insert(0,'1 ')
+    #print("M : ",M)
+
+    #print("M_final : ",M_final)
+  
     N = ["".join(k) for k in M]
+    N.insert(0,'  HH:MM:SS')
     #print("N : ",N)
-    #print(N,sep="\n")
+    #print("N : ",N,sep="\n")
     return "\n".join(N)
 
 #IST = pytz.timezone('Asia/Kolkota')
@@ -109,5 +127,5 @@ now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
 print("Current Time =", current_time)
+print("-------------------------------")
 print(binary_clock(current_time))
-print("Hi this is done for now")
