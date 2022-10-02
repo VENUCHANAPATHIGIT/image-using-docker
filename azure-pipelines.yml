@@ -33,3 +33,13 @@ steps:
     scriptSource: 'filePath'
     scriptPath: '$(System.DefaultWorkingDirectory)/clock-script.py'
 
+- task: CopyFiles@2
+  inputs:
+    Contents: '**'
+    TargetFolder: '$(System.DefaultWorkingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'artifact-produced'
+    publishLocation: 'Container'
