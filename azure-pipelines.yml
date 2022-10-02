@@ -28,3 +28,8 @@ steps:
     containerRegistry: 'DOCKER-HUB'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: '$(System.DefaultWorkingDirectory)/clock-script.py'
+
