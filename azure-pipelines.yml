@@ -28,10 +28,10 @@ steps:
     containerRegistry: 'DOCKER-HUB'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+-
 - task: Docker@2
   inputs:
     containerRegistry: 'ACR-CONNECTION'
-    repository: 'mybinaryclockacr'
     command: 'push'
 - task: PythonScript@0
   inputs:
