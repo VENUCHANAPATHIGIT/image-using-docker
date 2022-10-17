@@ -26,7 +26,9 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'DOCKER-HUB'
+    repository: 'my-clock-app'
     command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
     Dockerfile: '**/Dockerfile'
 - task: Docker@2
   inputs:
