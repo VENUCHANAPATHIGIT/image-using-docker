@@ -31,8 +31,9 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'MY-ACR-CONNECTION'
-    repository: 'my-clock-app-image'
-    command: 'push'
+    repository: 'test'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
