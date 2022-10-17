@@ -30,7 +30,7 @@ steps:
     Dockerfile: '**/Dockerfile'
 - task: Docker@2
   inputs:
-    containerRegistry: 'ACR-CONNECTION'
+    containerRegistry: 'MY-ACR-CONNECTION'
     command: 'push'
 - task: PythonScript@0
   inputs:
