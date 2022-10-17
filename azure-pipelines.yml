@@ -18,12 +18,12 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: Docker-1@2
+- task: Docker@2
   inputs:
     containerRegistry: 'MY-DOCKER-HUB-REGISTRY'
     command: 'login'
 
-- task: Docker-2@2
+- task: Docker@2
   inputs:
     containerRegistry: 'MY-DOCKER-HUB-REGISTRY'
     command: 'buildAndPush'
