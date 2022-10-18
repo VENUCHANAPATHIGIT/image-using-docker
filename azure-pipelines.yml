@@ -43,7 +43,6 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: '**'
     TargetFolder: '$(System.DefaultWorkingDirectory)'
 
 
