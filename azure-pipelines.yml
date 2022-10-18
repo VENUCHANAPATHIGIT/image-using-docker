@@ -45,8 +45,10 @@ steps:
   inputs:
     Contents: '**'
     TargetFolder: '$(System.DefaultWorkingDirectory)'
+
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'binary-clock'
+    ArtifactName: 'drop'
     publishLocation: 'Container'
