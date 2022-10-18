@@ -9,45 +9,75 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: TEST
+  displayName: TESTING-STAGES
+  jobs:
+  - job: TESTJOB
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: echo Hello, world!
+      displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'MY-DOCKER-HUB-REGISTRY'
-    command: 'login'
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'MY-DOCKER-HUB-REGISTRY'
-    repository: 'venuchanapathi1998 / my-clock-app-repo'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'MY-ACR-CONNECTION'
-    repository: 'test-acr-push'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'filePath'
-    scriptPath: '$(System.DefaultWorkingDirectory)/clock-script.py'
-
-- task: CopyFiles@2
-  inputs:
-    TargetFolder: '$(System.DefaultWorkingDirectory)'
+    - script: |
+        echo Add other tasks to build, test, and deploy your project.
+        echo See https://aka.ms/yaml
+      displayName: 'Run a multi-line script'
 
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+- stage: DOCKER-PUSH-HUB
+  displayName: TEST-DOCKER-HUB-PUSH
+  jobs:
+  - job:
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'MY-DOCKER-HUB-REGISTRY'
+        command: 'login'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'MY-DOCKER-HUB-REGISTRY'
+        repository: 'venuchanapathi1998 / my-clock-app-repo'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+
+- stage: DOCKER-PUSH-ACR
+  displayName: TEST-DOCKER-ACR-PUSH
+  jobs:
+  - job:
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'MY-ACR-CONNECTION'
+        repository: 'test-acr-push'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+    - task: PythonScript@0
+      inputs:
+        scriptSource: 'filePath'
+        scriptPath: '$(System.DefaultWorkingDirectory)/clock-script.py'
+
+
+- stage: DEPLOY
+  displayName: Archiving
+  jobs:
+  - job: 
+    pool:
+      vmImage: ubuntu-latest
+    steps: 
+    - task: CopyFiles@2
+      inputs:
+        TargetFolder: '$(System.DefaultWorkingDirectory)'
+
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
