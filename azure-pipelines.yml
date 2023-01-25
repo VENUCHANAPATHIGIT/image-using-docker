@@ -45,25 +45,6 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
 
-- stage: DOCKER_PUSH_ACR
-  displayName: TEST-DOCKER-ACR-PUSH
-  jobs:
-  - job:
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'MY-ACR-CONNECTION'
-        repository: 'test-acr-push'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-    - task: PythonScript@0
-      inputs:
-        scriptSource: 'filePath'
-        scriptPath: '$(System.DefaultWorkingDirectory)/clock-script.py'
-
-
 - stage: DEPLOY
   displayName: Archiving
   jobs:
